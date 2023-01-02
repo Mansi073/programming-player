@@ -32,7 +32,7 @@ int main(){
                 
         }       
                 
- }
+ } 
  
   if(flag){
   	cout<<"element found/n";
