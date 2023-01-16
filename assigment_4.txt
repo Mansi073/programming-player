@@ -170,4 +170,6 @@ int main(){
     if(flag == 1) cout<<"YES";
     else cout<<"NO";
     return 0;
-}
+}   
+hasss assigment//question
+1
