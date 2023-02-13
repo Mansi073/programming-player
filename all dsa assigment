@@ -1,0 +1,334 @@
+assigment 5
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class SinglyLinkedListNode {
+    public:
+        int data;
+        SinglyLinkedListNode *next;
+
+        SinglyLinkedListNode(int node_data) {
+            this->data = node_data;
+            this->next = nullptr;
+        }
+};
+
+class SinglyLinkedList {
+    public:
+        SinglyLinkedListNode *head;
+        SinglyLinkedListNode *tail;
+
+        SinglyLinkedList() {
+            this->head = nullptr;
+            this->tail = nullptr;
+        }
+
+        void insert_node(int node_data) {
+            SinglyLinkedListNode* node = new SinglyLinkedListNode(node_data);
+
+            if (!this->head) {
+                this->head = node;
+            } else {
+                this->tail->next = node;
+            }
+
+            this->tail = node;
+        }
+};
+
+void print_singly_linked_list(SinglyLinkedListNode* node, string sep, ofstream& fout) {
+    while (node) {
+        fout << node->data;
+
+        node = node->next;
+
+        if (node) {
+            fout << sep;
+        }
+    }
+}
+
+void free_singly_linked_list(SinglyLinkedListNode* node) {
+    while (node) {
+        SinglyLinkedListNode* temp = node;
+        node = node->next;
+
+        free(temp);
+    }
+}
+
+SinglyLinkedListNode* removeDuplicates(SinglyLinkedListNode* head) {
+    if(head == NULL) return head;
+    SinglyLinkedListNode* currBoi = head;
+    SinglyLinkedListNode* nextBoi = currBoi->next;
+
+    while(nextBoi != NULL){
+        if(currBoi->data == nextBoi->data){
+            SinglyLinkedListNode* temp = nextBoi;
+            nextBoi = nextBoi->next;
+            currBoi->next = nextBoi;
+            temp->next = NULL;
+            free(temp);
+        } else {
+            currBoi = currBoi->next;
+            nextBoi = nextBoi->next;
+        }
+    }
+    return head;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    int t;
+    cin >> t;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    for (int t_itr = 0; t_itr < t; t_itr++) {
+        SinglyLinkedList* llist = new SinglyLinkedList();
+
+        int llist_count;
+        cin >> llist_count;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        for (int i = 0; i < llist_count; i++) {
+            int llist_item;
+            cin >> llist_item;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            llist->insert_node(llist_item);
+        }
+
+        SinglyLinkedListNode* llist1 = removeDuplicates(llist->head);
+
+        print_singly_linked_list(llist1, " ", fout);
+        fout << "\n";
+
+        free_singly_linked_list(llist1);
+    }
+
+    fout.close();
+
+    return 0;
+}
+assigment 6/////////////////////////
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+void move(int d, string f, string t) {
+    cout << "Moving ring " << d << " from " << f << " to " << t << endl;
+}
+
+void hanoi(int n, string a, string b, string c) {
+    // Move n disks from a to c via b
+
+    if(n > 0) {
+        hanoi(n - 1, a, c, b);
+        move(n, a, c);
+        hanoi(n - 1, b, a, c);
+    }
+}
+
+int main() {
+    int n = 0;
+
+    cin >> n;
+
+    hanoi(n, "A", "C", "B");
+
+    return 0;
+}
+#include <iostream>
+using namespace std;
+
+struct Node{
+	int data;
+	Node *next;
+};
+
+Node* createNode(int val){
+	Node *temp = new Node;
+	temp->data = val;
+	return temp;
+}
+
+//complete the functions
+
+class Queue{
+	Node *head;
+	Node *tail;
+	int s;
+
+	public:
+	//constructor is called whenever an object of the class is declared
+	Queue(){
+		s=0;
+		head=NULL;
+		tail=NULL;
+	}
+
+	//push the value at the back
+	void push(int val){
+	 Node *temp = createNode(val);
+        if (head == NULL)
+        {
+            head = temp;
+            tail = temp;
+        }
+        else
+        {
+            tail->next = temp;
+            tail = temp;
+        }
+        s++;
+
+	}
+
+	int front(){
+		  return head->data;
+
+        return 0;
+	}
+
+	void pop(){
+		Node *temp = head;
+        head = head->next;
+        delete temp;
+        s--;
+	}
+
+	int size(){
+		return s;
+	}
+
+	bool isEmpty(){
+		 if (s == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+	}
+};
+
+int main() {
+	Queue q; //constructor is called on this line
+	q.push(4);
+	cout<<"front: "<<q.front()<<"\n";
+	q.pop();
+	cout<<"size: "<<q.size()<<"\n";
+	cout<<"empty: "<<q.isEmpty()<<"\n";
+
+	q.push(5);
+	q.push(3);
+	cout<<"front: "<<q.front()<<"\n";
+	q.pop();
+	cout<<"size: "<<q.size()<<"\n";
+	cout<<"empty: "<<q.isEmpty()<<"\n";
+
+	cout<<"front: "<<q.front()<<"\n";
+	q.pop();
+	cout<<"size: "<<q.size()<<"\n";
+	cout<<"empty: "<<q.isEmpty()<<"\n";
+	return 0;
+}
+assigment 7///////////////////////
+#include <iostream>
+
+using namespace std;
+int movr(int n,int a[],int target)
+{
+    int lo=0;
+    int hi=n-1;
+    int val=-1;
+    while(lo<=hi)
+    {
+        int mid=(lo+hi)/2;
+        if(a[mid]<=target)
+        {
+            if(val<mid)
+            val=mid;
+            lo=mid+1;
+        }
+        else hi=mid-1;
+    }
+    return(val+1);
+}
+
+int main()
+{
+   int n,k;
+   cin>>n>>k;
+   int a[n],b[k];
+   for(int i=0;i<n;i++)
+   {
+       cin>>a[i];
+   }
+   for(int t=0;t<k;t++)
+   {
+       cin>>b[t];
+   }
+   for(int i=0;i<k;i++)
+   {
+       int g;
+       g=movr(n,a,b[i]);
+       cout<<g<<endl;
+   }
+}
+assigment 8////////////////////////
+#include <bits/stdc++.h>
+using namespace std;
+
+//a function that will print the vector passed to it, elements seprated by space
+void printVector(vector<int>A)
+{
+	//traverse all the element and print them
+	for(int i=0;i<A.size();i++)
+	{
+		cout<<A[i]<<" ";	
+	}
+	cout<<"\n";
+}
+
+int getIndexOfMinElementFromiToEnd(vector<int>A, int i)
+{
+	int min_index = i; //default answer
+	for(; i<A.size(); i++)
+	{
+		if(A[i]<A[min_index])
+		{
+			min_index = i;
+		}
+	}
+	return min_index;
+}
+
+//the vector A will be sorted inplace and that's why passed with refrence
+void sort(vector<int>&A)
+{
+	for(int i=0;i<A.size();i++)
+	{
+		int j=getIndexOfMinElementFromiToEnd(A,i);
+		swap(A[i],A[j]);
+		cout<<"i: "<<i<<" vector: ";
+		printVector(A);
+	}
+}
+
+int main() {
+	vector<int>A= {6,1,2,3,4,6,1};
+	// your code goes here
+	sort(A);
+	cout<<"sorted vector: ";
+	printVector(A);
+
+	return 0;
+}
